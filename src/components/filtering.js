@@ -27,7 +27,17 @@ export function initFiltering(elements, indexes) {
       if (field) state[field] = "";
     }
 
+    // Приводим поля диапазона суммы к формату, который понимает arrayAsRange
+    const totalFrom =
+      state.totalFrom === "" ? undefined : Number(state.totalFrom);
+    const totalTo = state.totalTo === "" ? undefined : Number(state.totalTo);
+
+    const filterState = {
+      ...state,
+      total: [totalFrom, totalTo],
+    };
+
     // @todo: #4.5 — отфильтровать данные используя компаратор
-    return data.filter((row) => compare(row, state));
+    return data.filter((row) => compare(row, filterState));
   };
 }

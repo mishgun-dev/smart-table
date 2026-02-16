@@ -8,10 +8,10 @@ import { processFormData } from "./lib/utils.js";
 
 import { initTable } from "./components/table.js";
 // @todo: подключение
-import { initPagination } from "./components/pagination";
-import { initSorting } from "./components/sorting";
-import { initFiltering } from "./components/filtering";
-import { initSearching } from "./components/searching";
+import { initPagination } from "./components/pagination.js";
+import { initSorting } from "./components/sorting.js";
+import { initFiltering } from "./components/filtering.js";
+import { initSearching } from "./components/searching.js";
 
 // Исходные данные используемые в render()
 const { data, ...indexes } = initData(sourceData);
@@ -21,10 +21,10 @@ const { data, ...indexes } = initData(sourceData);
  * @returns {Object}
  */
 function collectState() {
-  const state = processFormData(sampleTable.container); // форма = контейнер таблицы
+  const state = processFormData(sampleTable.container);
 
-  const rowsPerPage = parseInt(state.rowsPerPage);
-  const page = parseInt(state.page ?? 1);
+  const rowsPerPage = parseInt(state.rowsPerPage, 10);
+  const page = parseInt(state.page ?? 1, 10);
 
   return {
     ...state,

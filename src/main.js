@@ -1,8 +1,6 @@
 import "./fonts/ys-display/fonts.css";
 import "./style.css";
 
-import { data as sourceData } from "./data/dataset_1.js";
-
 import { initData } from "./data.js";
 import { processFormData } from "./lib/utils.js";
 
@@ -14,7 +12,7 @@ import { initFiltering } from "./components/filtering.js";
 import { initSearching } from "./components/searching.js";
 
 // Исходные данные используемые в render()
-const api = initData(sourceData);
+const api = initData();
 
 /**
  * Сбор и обработка полей из таблицы
@@ -40,15 +38,11 @@ function collectState() {
 async function render(action) {
   let state = collectState(); // состояние полей из таблицы
   let query = {}; // здесь будут формироваться параметры запроса
-
-  // другие apply*
   query = applySearching(query, state, action); // применяем поиск к query
   query = applyFiltering(query, state, action); // применяем фильтрацию к query
   query = applySorting(query, state, action); // применяем сортировку к query
   query = applyPagination(query, state, action); // обновляем query
-
   const { total, items } = await api.getRecords(query); // запрашиваем данные с собранными параметрами
-
   updatePagination(total, query); // перерисовываем пагинатор
   sampleTable.render(items);
 }
@@ -86,7 +80,7 @@ const { applyFiltering, updateIndexes } = initFiltering(
   sampleTable.filter.elements,
 );
 
-const applySearching = initSearching("search"); // имя поля поиска в форме
+const applySearching = initSearching(sampleTable.search.elements);
 
 const appRoot = document.querySelector("#app");
 appRoot.appendChild(sampleTable.container);

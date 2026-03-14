@@ -1,9 +1,10 @@
-export function initSearching(searchField) {
-  return (query, state, action) =>
-    state[searchField]
+export function initSearching(searchField, fieldName = "search") {
+  return (query, state, action) => {
+    return state[fieldName]
       ? Object.assign({}, query, {
           // проверяем, что в поле поиска было что-то введено
-          search: state[searchField], // устанавливаем в query параметр
+          search: state[fieldName], // устанавливаем в query параметр
         })
       : query; // если поле с поиском пустое, просто возвращаем query без изменений
+  };
 }

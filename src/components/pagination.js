@@ -21,7 +21,7 @@ export const initPagination = (
           page = Math.max(1, page - 1);
           break; // переход на предыдущую страницу
         case "next":
-          page = page + 1;
+          page = Math.min(pageCount, page + 1);
           break; // переход на следующую страницу (фактический предел будет известен после получения total)
         case "first":
           page = 1;
